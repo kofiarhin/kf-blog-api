@@ -1,0 +1,43 @@
+POST http://localhost:5000/users
+Content-Type: application/json
+
+
+{
+    "name": "kyrie Irving",
+    "email": "kyrie@gmail.com",
+    "password": "password123"
+}
+
+###
+GET http://localhost:5000/users
+
+###
+GET http://localhost:5000/users/649d518cc247f20b07971bf4
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "kyrie@gmail.com",
+    "password": "password123"
+}
+
+###
+GET http://localhost:5000/profile
+
+Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OWQ1MThjYzI0N2YyMGIwNzk3MWJmNCIsImlhdCI6MTY4ODAzMzM1MH0.gWYTcl2uD0JAYCRvInYeBtut5CZRyfceZrRe73Ww71E
+
+
+
+
+
+
+
+
+
+
+
+
+
