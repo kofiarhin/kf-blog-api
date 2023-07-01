@@ -39,7 +39,8 @@ const getPostController = async(req, res) => {
 // update post
 const updatePost = async(req, res) => {
 
-    const userId = req.user.id;
+    try {
+        const userId = req.user.id;
     const id = req.params.id;
     const post = await Post.findById(id)
         const ownerId = post.owner;
@@ -51,6 +52,11 @@ const updatePost = async(req, res) => {
     await post.save()
 
     res.json(post)
+    } catch (error) {
+        
+        console.log(error.message)
+        res.status(500).json({ error: error.message})
+    }
     // res.json({ userId, ownerId})
 
   
