@@ -85,13 +85,14 @@ const userDeleteController = async(req, res) => {
 
     const id = req.params.id;
     const user = await User.findById(id);
-    console.log(user)
     if(!user) return res.json({ error: "user not found"})
 
     await User.deleteOne({_id: id})
     res.status(200).json({success: "user deleted", id: user.id})
 }
 
+
+// generate token
 const genToken = (id) => {
 
     const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET)
