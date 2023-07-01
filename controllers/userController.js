@@ -95,7 +95,7 @@ const userDeleteController = async(req, res) => {
 // generate token
 const genToken = (id) => {
 
-    const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET)
+    const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30d"})
 
     return token;
 }

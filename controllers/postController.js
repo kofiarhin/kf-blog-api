@@ -1,5 +1,7 @@
 const Post = require("../model/PostModel")
+const mongoose = require("mongoose")
 
+// create post
 const createPostController = async(req, res) => {
 
     const { title, body, owner} = req.body;
@@ -9,14 +11,7 @@ const createPostController = async(req, res) => {
     res.json(post)
 }
 
-
-// get list of post by owner
-/**
- * 
- * type: private
- * route /post
- * list of posts by user
- */
+// get list of posts
 const getPostsController = async(req, res) => {
 
     const posts = await Post.find({}).populate("owner")
@@ -29,6 +24,9 @@ const getPostsController = async(req, res) => {
 const getPostController = async(req, res) => {
 
     const  id = req.params.id;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(403).json({error: "invalid id"})
+    
     const post = await Post.findById(id);
 
     if(!post) return res.status(404).json({ error: "Post not found"})
@@ -42,6 +40,8 @@ const updatePost = async(req, res) => {
     try {
         const userId = req.user.id;
     const id = req.params.id;
+// check if valid id
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(403).json({ error: "invalid id"})
     const post = await Post.findById(id)
         const ownerId = post.owner;
     if(userId !== ownerId.toString()) return res.status(403).json({ error: "you are not authorized to updat this post"})
@@ -57,13 +57,13 @@ const updatePost = async(req, res) => {
         console.log(error.message)
         res.status(500).json({ error: error.message})
     }
-    // res.json({ userId, ownerId})
 
   
 }
 const deletePost = async(req, res) => {
    try {
     const userId = req.user.id;
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(403).json({ error: "invalid id"})
     const post = await Post.findById(req.params.id);
 
         if(!post) return res.status(404).json({ error: "post not found"})
